@@ -1,82 +1,54 @@
-# React 
-## **Why Learn React?**  
-- **Popular & widely used**: Backed by Facebook (Meta), React has a vast developer community.  
-- **Efficient & fast**: Uses Virtual DOM for optimized performance.  
-- **Component-based architecture**: Encourages code reusability and modular development.  
-- **Rich ecosystem**: Supports libraries like Redux, React Router, and more.  
-- **Easy to learn**: JSX makes UI development simpler.  
+# Virtual DOM | Fiber | Reconciliation
 
----
+**Doc** : [React Fiber Architecture](https://github.com/acdlite/react-fiber-architecture)
 
-## **Why Was React Created?**  
-- Facebook needed an efficient way to update UI dynamically.  
-- Traditional DOM manipulations were slow.  
-- React introduced **Virtual DOM** to enhance performance.  
-- Ensured better maintainability with **component-based architecture**.  
+### **1. Virtual DOM (VDOM)**  
+- **What is Virtual DOM?**  
+  - A **lightweight copy** of the actual DOM.  
+  - React uses it to update UI efficiently without directly modifying the real DOM.  
 
----
+- **How it Works?**  
+  1. React creates a Virtual DOM tree.  
+  2. When the state changes, React updates only the necessary parts in the Virtual DOM.  
+  3. React **compares** the new Virtual DOM with the previous one (Diffing).  
+  4. Only the changed elements are updated in the real DOM (Reconciliation).  
 
-## **Is React a Library or Framework?**  
-- **React is a Library**, not a full-fledged framework.  
-- Provides the **view layer** for UI development.  
-- Does not include built-in routing, state management, or backend tools (which frameworks like Angular have).  
+- **Why is Virtual DOM faster?**  
+  - Updating the **real DOM is slow** because it re-renders everything.  
+  - Virtual DOM **minimizes updates**, making React apps more efficient.  
 
----
 
-## **Core React Topics**  
+### **2. React Fiber**  
+- **What is Fiber?**  
+  - A **new reconciliation algorithm** introduced in React 16.  
+  - Makes UI rendering **smoother and faster**, especially for complex UIs.  
 
-### **1. State & UI Manipulation**  
-- **State**: Stores dynamic data inside a component (`useState`).  
-- **JSX (JavaScript XML)**: Allows writing UI components using HTML-like syntax inside JavaScript.  
+- **Why was Fiber introduced?**  
+  - The old Virtual DOM algorithm updated the entire UI in one go, causing lag.  
+  - Fiber **breaks UI updates into small tasks**, making them more responsive.  
 
-### **2. Component Reusability**  
-- **Components**: Small, reusable UI elements.  
-- **Types**: Functional components & Class-based components.  
+- **Key Benefits of Fiber**  
+  ✅ **Better Performance** → Handles large updates smoothly.  
+  ✅ **Prioritization** → Important updates (like user interactions) happen first.  
+  ✅ **Pausing & Resuming** → React can pause work and continue later (like multitasking).  
 
-### **3. Reusing Components (Props)**  
-- **Props (Properties)**: Used to pass data from parent to child components.  
-- **Read-only**: Cannot be modified within the child component.  
 
-### **4. How to Propagate Changes (Hooks)**  
-- **Hooks**: Allow functional components to use state & lifecycle methods.  
-- Important Hooks:  
-  - `useState`: Manages state in functional components.  
-  - `useEffect`: Handles side effects (like API calls).  
-  - `useContext`: Shares state between components without prop drilling.  
+### **3. Reconciliation**  
+- **What is Reconciliation?**  
+  - The process of updating the real DOM efficiently when state or props change.  
 
-### **5. Single Page Applications (SPA)**  
-- Loads a **single HTML file** and updates content dynamically.  
-- Uses **client-side routing** for seamless navigation.  
-- Faster user experience compared to traditional multi-page apps.  
+- **How does React do Reconciliation?**  
+  1. **Compares old and new Virtual DOM** (Diffing).  
+  2. Finds **the smallest possible changes**.  
+  3. Updates only the necessary parts of the real DOM.  
 
----
+- **React’s Diffing Algorithm**  
+  - If an element **type changes** → React removes the old one and creates a new one.  
+  - If a component has **children** → React updates only the changed ones.  
+  - Uses **Keys** to track elements efficiently (important for lists).  
 
-## **Additional Add-ons to React**  
 
-### **1. React Router**  
-- React does not have built-in routing.  
-- **React Router** helps in handling navigation within an SPA.  
-- Provides components like `<BrowserRouter>`, `<Route>`, and `<Link>`.  
-
-### **2. State Management**  
-- For global state handling in large apps.  
-- Libraries used:  
-  - **Redux**: Centralized state management.  
-  - **Context API**: Built-in, simpler alternative to Redux.  
-
-### **3. Class-Based Components**  
-- Older way of writing React components using ES6 classes.  
-- Uses `this.state` for state management.  
-- Lifecycle methods like `componentDidMount`, `componentDidUpdate`.  
-
-### **4. Functional-Based Components**  
-- Modern way of writing components using functions.  
-- Uses **hooks** instead of lifecycle methods.  
-- Simpler & more readable compared to class components.  
-
-### **5. Backend-as-a-Service (BaaS) for React Apps**  
-- BaaS platforms provide backend services like authentication, database, and storage.  
-- Popular BaaS providers:  
-  - **Firebase** (by Google)  
-  - **Supabase** (open-source alternative)  
-  - **AWS Amplify** (by Amazon)  
+### **In Simple Terms**  
+🟢 **Virtual DOM** → A fast, temporary copy of the real DOM.  
+⚡ **Fiber** → A new way to efficiently update the UI in small steps.  
+🔄 **Reconciliation** → The process of applying changes to the real DOM efficiently.  
